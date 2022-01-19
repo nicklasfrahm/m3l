@@ -1,0 +1,6 @@
+apiVersion: networking.m3l.dev/v1alpha1
+kind: Fabric
+metadata:
+  name: fabric-sample
+spec:
+  # Add fields here

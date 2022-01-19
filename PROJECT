@@ -1,0 +1,19 @@
+domain: m3l.dev
+layout:
+- go.kubebuilder.io/v3
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: m3l
+repo: github.com/nicklasfrahm/m3l
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: m3l.dev
+  group: networking
+  kind: Fabric
+  path: github.com/nicklasfrahm/m3l/api/v1alpha1
+  version: v1alpha1
+version: "3"
