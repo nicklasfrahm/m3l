@@ -1,6 +1,53 @@
 apiVersion: networking.m3l.dev/v1alpha1
 kind: Fabric
 metadata:
-  name: fabric-sample
+  name: internal
 spec:
-  # Add fields here
+  ipv4:
+    network: 172.16.0.0/22
+    # Based on the gateway and the address, two different modes
+    # are possible for a Fabric:
+    # - Gateway mode: The gateway and the address are the same.
+    # - Client mode: The gateway and the address are different.
+    gateway: 172.16.3.254
+    address: 172.16.3.254
+    # This option controls the usage of DHCP and the behavior
+    # depends on the mode of the Fabric:
+    # - Gateway mode: If "true", the router will provide a
+    #                 DHCP server.
+    # - Client mode: If "true", the router will use DHCP to
+    #                get an IP address.
+    dhcp: false
+    nameservers:
+      addresses:
+        - 1.1.1.1
+        - 1.0.0.1
+  router:
+    hostname: dfrobot-cm4rt
+    vlan: 1
+    interfaces:
+      - name: eth0
+        mac: de:ad:be:ef:00:01
+      - name: eth1
+        mac: de:ad:be:ef:00:02
+    bondingMode: 802.3ad
+  # TODO: Define IPV6 configuration layout.
+  # TODO: Add configuration for PXE booting and Tinkerbell.
+---
+apiVersion: networking.m3l.dev/v1alpha1
+kind: Fabric
+metadata:
+  name: external
+spec:
+  ipv4:
+    dhcp: true
+  router:
+    hostname: netgear-gs748t
+    vlan: 4093
+    interfaces:
+      - name: eth0
+        mac: be:ee:ee:ef:00:01
+  # TODO: Define IPV6 configuration layout.
+  # TODO: Add configuration for PXE booting and Tinkerbell.
+---
+
