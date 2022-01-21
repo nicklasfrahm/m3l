@@ -4,20 +4,21 @@ metadata:
   name: internal
 spec:
   ipv4:
-    network: 172.16.0.0/22
-    # Based on the gateway and the address, two different modes
-    # are possible for a Fabric:
-    # - Gateway mode: The gateway and the address are the same.
-    # - Client mode: The gateway and the address are different.
+    # If this is set, the Fabric will be in Gateway Mode.
+    dhcp:
+      # Whether to enable the DHCP client or not.
+      client: false
+      # The settings below control the behavior of the
+      # DHCP server.
+      subnet: 172.16.0.0/22
+      start: 172.16.0.1
+      end: 172.16.3.200
+    # Required to be set by the user if the DHCP server in
+    # the Fabric is enabled.
     gateway: 172.16.3.254
-    address: 172.16.3.254
-    # This option controls the usage of DHCP and the behavior
-    # depends on the mode of the Fabric:
-    # - Gateway mode: If "true", the router will provide a
-    #                 DHCP server.
-    # - Client mode: If "true", the router will use DHCP to
-    #                get an IP address.
-    dhcp: false
+    # The IP addresses of the router on this network edge.
+    addresses:
+      - 172.16.3.254/22
     nameservers:
       addresses:
         - 1.1.1.1
@@ -40,7 +41,8 @@ metadata:
   name: external
 spec:
   ipv4:
-    dhcp: true
+    dhcp:
+      client: true
   router:
     hostname: netgear-gs748t
     vlan: 4093
